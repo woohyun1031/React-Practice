@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React from "react";
-import "./App.css"
 import BucketList from "./Bucket";
+import { MdAdd } from 'react-icons/md';
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
                       title:title.current.value, 
                       contents:contents.current.value,
                       example:example.current.value}]);    
-  }
+  } 
   const onRemove = (id) => {
     console.log("작동")
     console.log(id)
@@ -29,10 +29,13 @@ function App() {
     <div className="App" style={{textAlign: "center"}}>
       <AppWrap>
         <Container>
-          <h1>My Dictionary</h1>
+          <h1>My <span style={{color:"#20c997"}}>D</span>ictionary</h1>
+          <hr style={{height:"0.7px",backgroundColor:"#20c997"}}/>
           <BucketList list={list} onRemove={onRemove}/>
+          <CircleButton>
+            <MdAdd />
+          </CircleButton>
         </Container>
-        
         <InputBox>
           <p>단어</p><input id="input_box" type="text" ref={title} placeholder="단어를 입력하세요"/>
           <p>설명</p><input id="input_box" type="text" ref={contents} placeholder="설명을 입력하세요"/>
@@ -46,34 +49,68 @@ function App() {
 
 
 const AppWrap = styled.div`
-  background-color: #eee;
+  background-color: #e9ecef;
   height: 100%;
   width: 100vw;
   display: flex;
   flex-direction: column;
 `;
 const Container = styled.div`
-  width: 50%;
-  height:50%;
+  position: relative;   
+  width: 60%;
+  height:40%;
   min-width: 250px;
-  min-height: 80vh;
+  min-height: 60vh;
   background-color: #fff;
   padding: 16px;
-  margin: 30px auto;
-  border-radius: 5px;
+  margin: 30px auto 0px auto;
+  border-radius:16px;
   border: 1px solid #ddd;  
+`;
+
+const CircleButton = styled.button`
+
+  background: #38d9a9;
+  &:hover {
+    background: #63e6be;
+  }
+  &:active {
+    background: #20c997;
+  }
+
+  z-index: 1;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  position: absolute;
+  left:50%;
+  bottom:0;
+
+  transform: translate(-50%, 50%);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.125s all ease-in;
 `;
 const InputBox = styled.div`
   display:flex;
   flex-direction:column;
   justify-content: center;
   background-color: #fff; 
-  width: 50%;
+  width: 60%;
   min-width: 250px;
   margin: 10px auto 50px auto;
   padding: 16px;
   border: 1px solid #ddd;
-  border-radius: 5px;  
+  border-radius: 16px;  
   #input_box{
     margin-bottom:5px;    
   }
@@ -85,5 +122,6 @@ const InputBox = styled.div`
     margin-top :15px;
   }
 `;
+
 
 export default App;
