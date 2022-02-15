@@ -1,12 +1,17 @@
 import styled, { css } from "styled-components";
 import React from "react";
 import BucketList from "./Bucket";
+import InputList from "./InputList";
 import { MdAdd } from 'react-icons/md';
+import Route from 'react-router-dom'
 
 
 function App() {
   const [list, setList] = React.useState([]);
   //dict들을 배열로 만들어야 때문에 [] 안에 {} 입력
+  const [open, setOpen] = React.useState(false);
+  const onToggle = () => setOpen(!open);
+
   const title = React.useRef(null);
   const contents = React.useRef(null);
   const example = React.useRef(null);
@@ -19,11 +24,7 @@ function App() {
                       example:example.current.value}]);    
   } 
   const onRemove = (id) => {
-    console.log("작동")
-    console.log(id)
     setList(list.filter( user => user.id !== id));
-    console.log()
-    console.log("완료")
   };
   return (
     <div className="App" style={{textAlign: "center"}}>
@@ -32,7 +33,8 @@ function App() {
           <h1>My <span style={{color:"#20c997"}}>D</span>ictionary</h1>
           <hr style={{height:"0.7px",backgroundColor:"#20c997"}}/>
           <BucketList list={list} onRemove={onRemove}/>
-          <CircleButton>
+         
+          <CircleButton onClick={onToggle} open={open}>
             <MdAdd />
           </CircleButton>
         </Container>
@@ -98,7 +100,21 @@ const CircleButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
   transition: 0.125s all ease-in;
+
+  ${props =>
+    props.open &&
+    css`
+      background: #ff6b6b;
+      &:hover {
+        background: #ff8787;
+      }
+      &:active {
+        background: #fa5252;
+      }
+      transform: translate(-50%, 50%) rotate(45deg);
+    `}
 `;
 const InputBox = styled.div`
   display:flex;

@@ -13,7 +13,8 @@ const BucketList = (props) => {
                             <div id = "wrap">
                                 <div id="left_side">                     
                                     <div id="head">
-                                        <span id="title">{list.title}</span> <span id="contents">{list.contents}</span>
+                                        <span id="title">{list.title}</span> 
+                                        <span id="contents">{list.contents}</span>
                                     </div>
                                     <div id="foot">
                                         <p>{list.example}</p>
