@@ -3,54 +3,62 @@ import React from "react";
 import BucketList from "./Bucket";
 import InputList from "./InputList";
 import { MdAdd } from 'react-icons/md';
-import Route from 'react-router-dom'
+import {Route, useHistory }  from 'react-router-dom'
 
 
 function App() {
   const [list, setList] = React.useState([]);
   //dict들을 배열로 만들어야 때문에 [] 안에 {} 입력
   const [open, setOpen] = React.useState(false);
-  const onToggle = () => setOpen(!open);
+  const history = useHistory();
+
+  const onToggle = () => {
+    setOpen(!open);
+    open ?  history.push("/") : history.push("/input");
+  }
 
   const title = React.useRef(null);
   const contents = React.useRef(null);
   const example = React.useRef(null);
   let id_val = Date.now();
 
-  const addList = (props) => { //화면에 보여지는게 아닌 단순 배열에 추가
-    setList([...list, {id:id_val,
-                      title:title.current.value, 
-                      contents:contents.current.value,
-                      example:example.current.value}]);    
+  const onAddList = (props) => { //화면에 보여지는게 아닌 단순 배열에 추가
+    setList([...list, {id:props.id_val,
+                      title:props.title, 
+                      contents:props.contents,
+                      example:props.example}]);  
+    {onToggle()}      
   } 
+
   const onRemove = (id) => {
     setList(list.filter( user => user.id !== id));
   };
   return (
-    <div className="App" style={{textAlign: "center"}}>
-      <AppWrap>
-        <Container>
-          <h1>My <span style={{color:"#20c997"}}>D</span>ictionary</h1>
-          <hr style={{height:"0.7px",backgroundColor:"#20c997"}}/>
-          <BucketList list={list} onRemove={onRemove}/>
-         
-          <CircleButton onClick={onToggle} open={open}>
-            <MdAdd />
-          </CircleButton>
-        </Container>
-        <InputBox>
-          <p>단어</p><input id="input_box" type="text" ref={title} placeholder="단어를 입력하세요"/>
-          <p>설명</p><input id="input_box" type="text" ref={contents} placeholder="설명을 입력하세요"/>
-          <p>예시</p><input id="input_box" type="text" ref={example} placeholder="예시를 입력하세요"/>
-          <button onClick={addList}>추가하기</button>
-        </InputBox>
-      </AppWrap>
+    <div className="App" style={{textAlign: "center"}}>      
+        <AppWrap>
+          <Container>
+            <h1>My <span style={{color:"#20c997"}}>D</span>ictionary</h1>
+            <hr style={{height:"0.7px",backgroundColor:"#20c997"}}/>
+            <Route exact path="/" ><BucketList list={list} onRemove={onRemove}/></Route>
+            <Route path="/input"><InputList list={list} onAddList={onAddList}/></Route>
+
+            <CircleButton onClick={onToggle} open={open}>
+              <MdAdd />
+            </CircleButton>
+          </Container>
+          {/* <InputBox>
+            <p>단어</p><input id="input_box" type="text" ref={title} placeholder="단어를 입력하세요"/>
+            <p>설명</p><input id="input_box" type="text" ref={contents} placeholder="설명을 입력하세요"/>
+            <p>예시</p><input id="input_box" type="text" ref={example} placeholder="예시를 입력하세요"/>
+            <button onClick={onAddList}>추가하기</button>
+          </InputBox>  */}
+        </AppWrap>
     </div>
   );
 }
 
 
-const AppWrap = styled.div`
+const AppWrap = styled.div`  
   background-color: #e9ecef;
   height: 100%;
   width: 100vw;
@@ -60,12 +68,12 @@ const AppWrap = styled.div`
 const Container = styled.div`
   position: relative;   
   width: 60%;
-  height:40%;
+  height:100%;
   min-width: 250px;
   min-height: 60vh;
   background-color: #fff;
   padding: 16px;
-  margin: 30px auto 0px auto;
+  margin: 150px auto 200px auto;
   border-radius:16px;
   border: 1px solid #ddd;  
 `;

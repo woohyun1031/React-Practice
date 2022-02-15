@@ -85,7 +85,7 @@ const ItemStyle = styled.div`
     #title{
         display:block;
         min-width:60px;
-        font-size: 25x;
+        font-size: 25px;
         font-weight:800;
         margin-right:20px;
     }
