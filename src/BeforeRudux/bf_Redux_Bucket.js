@@ -1,44 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 import { MdDelete } from 'react-icons/md';
-import {useSelector} from "react-redux";
-import {useDispatch} from "react-redux";
-import {removeBucket } from "./redux/modules/bucket";
 
 const BucketList = (props) => {    
-    const my_list = useSelector((state) => state.bucket.list);
-    console.log(my_list, "mylist")
-    const dispatch = useDispatch();
-    
-    const onRemove = (id) => {
-        console.log("remove start")
-        dispatch(removeBucket(id));
-        console.log("remove end")    
-      }; 
-
+    const my_list = props.list;
+    const onRemove = props.onRemove    
+    // 컴포넌트가 뿌려줄 ui 요소(리엑트 엘리먼트라고 불러요.)를 반환해줍니다.
     return (
         <ListStyle>
-            {my_list && my_list.map((list,index) =>( //return을 안 써도 되는건가
-                <ItemStyle key={index}>                              
-                    <div id = "wrap">
-                        <div id="left_side">                     
-                            <div id="head">
-                                <span id="title">{list.title}</span> 
-                                <span id="contents">{list.contents}</span>
+            {my_list.map((list,index) =>( //return을 안 써도 되는건가
+                        <ItemStyle key={index}>   
+                            <div id = "wrap">
+                                <div id="left_side">                     
+                                    <div id="head">
+                                        <span id="title">{list.title}</span> 
+                                        <span id="contents">{list.contents}</span>
+                                    </div>
+                                    <div id="foot">
+                                        <p>{list.example}</p>
+                                    </div>
+                                </div>
+                                <div id="right_side">                        
+                                    <MdDelete onClick={() => onRemove(list.id)}>Del</MdDelete>
+                                </div>
                             </div>
-                            <div id="foot">
-                                <p>{list.example}</p>
+                            <div>                           
+                                <hr/>
                             </div>
-                        </div>
-                        <div id="right_side">                        
-                            <MdDelete onClick={() => onRemove(list.id_val)}>Del</MdDelete>
-                        </div>
-                    </div>
-                    <div>                           
-                        <hr/>
-                    </div>
-                    {/*{index}*/}
-                </ItemStyle>                        
+                            {/*{index}*/}
+                        </ItemStyle>                        
             ))}
         </ListStyle>  
     );

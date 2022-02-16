@@ -4,40 +4,49 @@ import BucketList from "./Bucket";
 import InputList from "./InputList";
 import { MdAdd } from 'react-icons/md';
 import {Route, useHistory }  from 'react-router-dom'
-import {useSelector,useDispatch} from "react-redux";
-import { changeToggle,loadBucket } from "./redux/modules/bucket";
 
 
 function App() {
-  const dispatch = useDispatch();  
-  const open = useSelector((state) => state.bucket.open);
+  const [list, setList] = React.useState([]);
+  //dict들을 배열로 만들어야 때문에 [] 안에 {} 입력
+  const [open, setOpen] = React.useState(false);
   const history = useHistory();
-  
+
   const onToggle = () => {
-    dispatch(changeToggle(open)).open ?  history.push("/") : history.push("/input");    
+    setOpen(!open);
+    open ?  history.push("/") : history.push("/input");
   }
 
-  React.useEffect(() => {
-    //dispatch(loadBucket())
-    console.log("useeffect on")     
-    return (()=>{
-        console.log("useeffect off")
-      }) 
-  }, [])
-  
+  const onAddList = (props) => { //화면에 보여지는게 아닌 단순 배열에 추가
+    setList([...list, {id:props.id_val,
+                      title:props.title, 
+                      contents:props.contents,
+                      example:props.example}]);  
+    {onToggle()}      
+  } 
 
+  const onRemove = (id) => {
+    setList(list.filter( user => user.id !== id));
+  };
   return (
     <div className="App" style={{textAlign: "center"}}>      
         <AppWrap>
           <Container>
             <h1>My <span style={{color:"#20c997"}}>D</span>ictionary</h1>
             <hr style={{height:"0.7px",backgroundColor:"#20c997"}}/>
-            <Route exact path="/" ><BucketList/></Route>
-            <Route path="/input"><InputList/></Route>
+            <Route exact path="/" ><BucketList list={list} onRemove={onRemove}/></Route>
+            <Route path="/input"><InputList list={list} onAddList={onAddList}/></Route>
+
             <CircleButton onClick={onToggle} open={open}>
               <MdAdd />
             </CircleButton>
           </Container>
+          {/* <InputBox>
+            <p>단어</p><input id="input_box" type="text" ref={title} placeholder="단어를 입력하세요"/>
+            <p>설명</p><input id="input_box" type="text" ref={contents} placeholder="설명을 입력하세요"/>
+            <p>예시</p><input id="input_box" type="text" ref={example} placeholder="예시를 입력하세요"/>
+            <button onClick={onAddList}>추가하기</button>
+          </InputBox>  */}
         </AppWrap>
     </div>
   );
