@@ -3,17 +3,19 @@ import styled from "styled-components";
 import { MdDelete } from 'react-icons/md';
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
-import {removeBucket } from "./redux/modules/bucket";
+import {deleteBucketFB } from "./redux/modules/bucket";
 
 const BucketList = (props) => {    
+
     const my_list = useSelector((state) => state.bucket.list);
     console.log(my_list, "mylist")
     const dispatch = useDispatch();
     
-    const onRemove = (id) => {
-        console.log("remove start")
-        dispatch(removeBucket(id));
-        console.log("remove end")    
+    const onRemove = (id,id_val) => {
+        console.log(id)
+        console.log(id_val)
+        console.log("삭제시작")
+        dispatch(deleteBucketFB(id,id_val));  
       }; 
 
     return (
@@ -31,7 +33,7 @@ const BucketList = (props) => {
                             </div>
                         </div>
                         <div id="right_side">                        
-                            <MdDelete onClick={() => onRemove(list.id_val)}>Del</MdDelete>
+                            <MdDelete onClick={() => onRemove(list.id, list.id_val)}>Del</MdDelete>
                         </div>
                     </div>
                     <div>                           

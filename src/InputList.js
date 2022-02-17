@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
-import { createBucket,changeToggle } from "./redux/modules/bucket";
+import { changeToggle,addBucketFB } from "./redux/modules/bucket";
 
 const InputList = (props) => {   
 
@@ -17,8 +17,9 @@ const InputList = (props) => {
 
     const onAddList = (props) => { //화면에 보여지는게 아닌 단순 배열에 추가
       console.log(props,"props")
-      dispatch(createBucket(props));
-
+      //dispatch(createBucket(props));
+      dispatch(addBucketFB(props));
+      
       let change_open = dispatch(changeToggle(open)).open;
       change_open ?  history.push("/") : history.push("/input");    
     } 

@@ -5,7 +5,7 @@ import InputList from "./InputList";
 import { MdAdd } from 'react-icons/md';
 import {Route, useHistory }  from 'react-router-dom'
 import {useSelector,useDispatch} from "react-redux";
-import { changeToggle,loadBucket } from "./redux/modules/bucket";
+import { changeToggle, loadBucketFB } from "./redux/modules/bucket";
 
 
 function App() {
@@ -13,17 +13,22 @@ function App() {
   const open = useSelector((state) => state.bucket.open);
   const history = useHistory();
   
+  React.useEffect(() => {
+    console.log("useeffect on")    
+    dispatch(loadBucketFB());    
+    // const query = await getDocs(collection(db, 'bucket'));
+    // query.forEach((doc) => {
+    //   console.log(doc.data());
+    // });
+    // return (()=>{
+    //     console.log("useeffect off");
+    //   }) 
+  }, [])
+
   const onToggle = () => {
     dispatch(changeToggle(open)).open ?  history.push("/") : history.push("/input");    
   }
 
-  React.useEffect(() => {
-    //dispatch(loadBucket())
-    console.log("useeffect on")     
-    return (()=>{
-        console.log("useeffect off")
-      }) 
-  }, [])
   
 
   return (
