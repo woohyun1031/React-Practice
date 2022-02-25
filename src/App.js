@@ -12,7 +12,7 @@ import { TodoProvider } from "./TodoContext";
 import { UsersProvider } from "./UsersContext";
 
 import Users from "./Users";
-import Profile from "./Profile";
+import Profiles from "./Profiles";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
             <TodoHead />
             <Route path="/" exact={true} component={TodoListBlock} />
             <Route path="/users" component={Users} />
-            <Route path="/profiles/:username" component={Profile} />
+            <Route path="/profiles" component={Profiles} />
           </TodoTemplate>
         </TodoProvider>
       </UsersProvider>
