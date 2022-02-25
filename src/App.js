@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route } from "react-router-dom";
+
+import { createGlobalStyle } from "styled-components";
+
+import TodoTemplate from "./components/TodoTemplate";
+import TodoHead from "./components/TodoHead";
+
+import TodoListBlock from "./components/Todoimport";
+
+import { TodoProvider } from "./TodoContext";
+import { UsersProvider } from "./UsersContext";
+
+import Users from "./Users";
+import Profile from "./Profile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <UsersProvider>
+        <TodoProvider>
+          <GlobalStyle />
+          <TodoTemplate>
+            <TodoHead />
+            <Route path="/" exact={true} component={TodoListBlock} />
+            <Route path="/users" component={Users} />
+            <Route path="/profiles/:username" component={Profile} />
+          </TodoTemplate>
+        </TodoProvider>
+      </UsersProvider>
+    </React.Fragment>
   );
 }
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`;
 
 export default App;
