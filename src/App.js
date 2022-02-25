@@ -13,6 +13,7 @@ import { UsersProvider } from "./context/UsersContext";
 
 import Users from "./components/Users";
 import Profiles from "./components/Profiles";
+import CounterContainer from "./containers/CounterContainer";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" exact={true} component={TodoListBlock} />
             <Route path="/users" component={Users} />
             <Route path="/profiles" component={Profiles} />
+            <Route path="/countercontainer" component={CounterContainer} />
           </TodoTemplate>
         </TodoProvider>
       </UsersProvider>
