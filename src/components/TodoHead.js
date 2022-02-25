@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useTodoState } from "../TodoContext";
+import { useTodoState } from "../context/TodoContext";
 
 function TodoHead() {
   const todos = useTodoState();

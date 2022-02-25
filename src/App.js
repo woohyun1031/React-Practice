@@ -8,11 +8,11 @@ import TodoHead from "./components/TodoHead";
 
 import TodoListBlock from "./components/Todoimport";
 
-import { TodoProvider } from "./TodoContext";
-import { UsersProvider } from "./UsersContext";
+import { TodoProvider } from "./context/TodoContext";
+import { UsersProvider } from "./context/UsersContext";
 
-import Users from "./Users";
-import Profiles from "./Profiles";
+import Users from "./components/Users";
+import Profiles from "./components/Profiles";
 
 function App() {
   return (

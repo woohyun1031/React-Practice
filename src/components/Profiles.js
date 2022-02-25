@@ -1,10 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { Link, Route } from "react-router-dom";
 import Profile from "./Profile";
 
 const Profiles = () => {
   return (
-    <div>
+    <ProfileListBlock>
       <h3>유저 목록:</h3>
       <ul>
         <li>
@@ -20,8 +21,15 @@ const Profiles = () => {
         render={() => <div>유저를 선택해주세요.</div>}
       />
       <Route path="/profiles/:username" component={Profile} />
-    </div>
+    </ProfileListBlock>
   );
 };
+
+const ProfileListBlock = styled.div`
+  flex: 1;
+  padding: 20px 32px;
+  padding-bottom: 48px;
+  overflow-y: auto;
+`;
 
 export default Profiles;
