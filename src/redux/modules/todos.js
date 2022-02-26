@@ -4,6 +4,7 @@ const TOGGLE_TODO = "todos/TOGGLE_TODO";
 
 /* 액션 생성함수 선언 */
 let nextId = 1; // todo 데이터에서 사용 할 고유 id
+
 export const addTodo = (text) => ({
   type: ADD_TODO,
   todo: {

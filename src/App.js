@@ -13,7 +13,8 @@ import { UsersProvider } from "./context/UsersContext";
 
 import Users from "./components/Users";
 import Profiles from "./components/Profiles";
-import CounterContainer from "./containers/CounterContainer";
+import Sidebar from "./components/Sidebar";
+import ContainerBox from "./containers/ContainerBox";
 
 function App() {
   return (
@@ -21,12 +22,13 @@ function App() {
       <UsersProvider>
         <TodoProvider>
           <GlobalStyle />
+          <Sidebar />
           <TodoTemplate>
             <TodoHead />
             <Route path="/" exact={true} component={TodoListBlock} />
             <Route path="/users" component={Users} />
             <Route path="/profiles" component={Profiles} />
-            <Route path="/countercontainer" component={CounterContainer} />
+            <Route path="/containerbox" component={ContainerBox} />
           </TodoTemplate>
         </TodoProvider>
       </UsersProvider>
