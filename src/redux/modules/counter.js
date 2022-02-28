@@ -17,6 +17,18 @@ const initialState = {
   diff: 1,
 };
 
+//middleware
+export const increaseAsync = () => async (dispatch) => {
+  console.log("delay start");
+  await setTimeout(() => dispatch(increase()), 1000);
+  console.log("delay end");
+};
+export const decreaseAsync = () => (dispatch) => {
+  console.log("delay start");
+  setTimeout(() => dispatch(decrease()), 1000);
+  console.log("delay end");
+};
+
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
 export default function counter(state = initialState, action) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { createGlobalStyle } from "styled-components";
 
@@ -25,10 +25,12 @@ function App() {
           <Sidebar />
           <TodoTemplate>
             <TodoHead />
-            <Route path="/" exact={true} component={TodoListBlock} />
-            <Route path="/users" component={Users} />
-            <Route path="/profiles" component={Profiles} />
-            <Route path="/containerbox" component={ContainerBox} />
+            <Routes>
+              <Route path="/" element={<TodoListBlock />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="profiles/*" element={<Profiles />} />
+              <Route path="/containerbox" element={<ContainerBox />} />
+            </Routes>
           </TodoTemplate>
         </TodoProvider>
       </UsersProvider>

@@ -3,10 +3,10 @@ import "./Sidebar.css";
 import { FaRegHeart } from "react-icons/fa";
 import { GoTriangleRight, GoThumbsup, GoHome } from "react-icons/go";
 import { RiNotification3Line } from "react-icons/ri";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function TodoHead() {
   const [mode, setMode] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // const body = document.querySelector("body"),
   //   sidebar = body.querySelector("nav"),
@@ -44,9 +44,9 @@ function TodoHead() {
                 <span className="profession">React Project</span>
               </div>
             </div>
-            <i className="bx bx-chevron-right toggle">
+            {/* <i className="bx bx-chevron-right toggle">
               <GoTriangleRight />
-            </i>
+            </i> */}
           </header>
 
           <div className="menu-bar">
@@ -57,7 +57,7 @@ function TodoHead() {
                     <i
                       className="bx bx-home-alt icon"
                       onClick={() => {
-                        history.push("/");
+                        navigate("/");
                       }}
                     >
                       <GoHome />
@@ -71,7 +71,7 @@ function TodoHead() {
                     <i
                       className="bx bx-bar-chart-alt-2 icon"
                       onClick={() => {
-                        history.push("/users");
+                        navigate("/users");
                       }}
                     >
                       <FaRegHeart />
@@ -85,7 +85,7 @@ function TodoHead() {
                     <i
                       className="bx bx-bell icon"
                       onClick={() => {
-                        history.push("/profiles");
+                        navigate("/profiles");
                       }}
                     >
                       <RiNotification3Line />
@@ -99,7 +99,7 @@ function TodoHead() {
                     <i
                       className="bx bx-heart icon"
                       onClick={() => {
-                        history.push("/containerbox");
+                        navigate("/containerbox");
                       }}
                     >
                       <GoThumbsup />
