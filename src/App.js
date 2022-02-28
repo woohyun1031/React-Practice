@@ -9,7 +9,7 @@ import TodoHead from "./components/TodoHead";
 import TodoListBlock from "./components/Todoimport";
 
 import { TodoProvider } from "./context/TodoContext";
-import { UsersProvider } from "./context/UsersContext";
+import { UsersProvider } from "./redux/modules/users";
 
 import Users from "./components/Users";
 import Profiles from "./components/Profiles";

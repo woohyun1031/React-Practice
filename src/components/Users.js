@@ -4,7 +4,7 @@ import {
   useUsersState,
   useUsersDispatch,
   getUsers,
-} from "../context/UsersContext";
+} from "../redux/modules/users";
 import User from "./User";
 
 function Users() {
@@ -13,7 +13,7 @@ function Users() {
   const dispatch = useUsersDispatch();
 
   const { data: users, loading, error } = state.users; //init val = data: user = null, false, null
-
+  console.log(users, "users");
   const fetchData = () => {
     getUsers(dispatch);
   };
@@ -21,7 +21,7 @@ function Users() {
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
   if (!users) return <button onClick={fetchData}>불러오기</button>; //init val이 null이기 때문에
-
+  console.log(users, "users2");
   return (
     <UserListBlock>
       <ul>

@@ -3,7 +3,7 @@ import {
   useUsersState,
   useUsersDispatch,
   getUser,
-} from "../context/UsersContext";
+} from "../redux/modules/users";
 
 function User({ id }) {
   const state = useUsersState();
