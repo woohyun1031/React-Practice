@@ -10,19 +10,22 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import Register from './pages/Register';
 import { getUserFB } from './redux/modules/user';
+import { getPostFB } from './redux/modules/post';
 
 import TodoTemplate from "./components/TodoTemplate";
 import { createGlobalStyle } from "styled-components";
+import firebaseApp from "./shared/firebase/firebase"
 
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.is_login);
-  const sessionKey = `firebase:authUser:${process.env.REACT_APP_API_KEY}:[DEFAULT]`;
+  const sessionKey = `firebase:authUser:${firebaseApp.apikey}:[DEFAULT]`;
   const isSession = sessionStorage.getItem(sessionKey) ? true : false;
 
   useEffect(() => {
+    dispatch(getPostFB());
     isSession && dispatch(getUserFB());
-  }, []);
+  }, []); //현 state값 재정비
 
   return (
     <>
