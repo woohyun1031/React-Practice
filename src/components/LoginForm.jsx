@@ -3,39 +3,38 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../elements/Button';
-import { loginFB } from '../redux/modules/user';
+import { signinAxios } from '../redux/modules/user';
 import { checkEmail } from '../shared/functions';
 
-const LoginForm = (props) => {
+const LoginForm = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailRef = useRef();
   const pwRef = useRef();
 
-  const onLogin = (e) => {
+  const onLogin = e => {
     e.preventDefault();
 
     const email = emailRef.current.value;
     const pw = pwRef.current.value;
 
-    if (!checkEmail(email).res) {
-      emailRef.current.focus();
-      alert(checkEmail(email).msg);
-      return;
-    }
+    // if (!checkEmail(email).res) {
+    //   emailRef.current.focus();
+    //   alert(checkEmail(email).msg);
+    //   return;
+    // }
 
-    if (pw === '') {
-      pwRef.current.focus();
-      alert('비밀번호를 입력해주세요');
-    }
+    // if (pw === '') {
+    //   pwRef.current.focus();
+    //   alert('비밀번호를 입력해주세요');
+    // }
 
     const loginData = {
-      email: email,
+      username: email,
       password: pw,
     };
 
-    dispatch(loginFB(loginData));
-    navigate('/', { replace: true }); // 성공일 때
+    dispatch(signinAxios({ loginData, navigate })); // 성공일 때
   };
 
   return (

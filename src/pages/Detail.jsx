@@ -1,33 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { deletePostFB } from '../redux/modules/post';
+import {
+  deletePostAxios,
+  deletePostFB,
+  getOnePostAxios,
+} from '../redux/modules/post';
 
 const Detail = props => {
+  const thisCard = useSelector(state => state.postdetail.post);
   const param = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const username = useSelector(state => state.user.user_info.username);
-  console.log(location);
+
+  useEffect(() => {
+    dispatch(getOnePostAxios(param.postId));
+  }, []);
 
   const goToEdit = () => {
-    navigate(`/edit/${param.postId}`, { state: location.state });
+    navigate(`/edit/${thisCard.boardId}`, { state: thisCard });
   };
 
   const handleDelete = () => {
-    dispatch(deletePostFB(param.postId));
-    navigate('/', { replace: true });
+    dispatch(
+      deletePostAxios({ username, boardId: thisCard.boardId, navigate })
+    );
   };
 
   return (
     <>
-      <PostCard card={location.state} />
-      {username === location.state.creater && (
+      <PostCard card={thisCard} />
+      {username === thisCard.creater && (
         <PostButtons>
           <button onClick={goToEdit}>
             <FaEdit />

@@ -7,13 +7,14 @@ export const gridSlice = createSlice({
   initialState,
   reducers: {
     setGrid: (state, action) => {
-      console.log(state);
-      console.log(action);
       state.grid = action.payload;
+    },
+    resetGrid: (state, action) => {
+      state.grid = initialState.grid;
     },
   },
 });
 
-export const { setGrid } = gridSlice.actions;
+export const { setGrid, resetGrid } = gridSlice.actions;
 
 export default gridSlice.reducer;

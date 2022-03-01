@@ -1,73 +1,195 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Firestore from "../../shared/firebase/firestore";
-import FBstorage from "../../shared/firebase/storage";
+import PostApi from "../../service/apis/postApi";
+import Firestore from "../../service/firebase/firestore";
+import FBstorage from "../../service/firebase/storage";
+import { setOnePost } from "./postdetail";
 
 const FSapi = new Firestore();
 const Storage = new FBstorage();
+const Postapi = new PostApi();
 
-//createAsyncThunk
-//Action type과 Promise를 반환하는 함수를 수락하고
-//pending/fulfilled/rejected 해당 Promise를 기반으로 Action type을 전달하는 thunk를 생성합니다.
-export const getPostFB = createAsyncThunk(
-  "post/getPostFB",
-  async () => await FSapi.getPost()
+const initialState = {
+  data: [],
+  paging: { load: true, next: null, size: 10 },
+  is_loading: false,
+};
+
+export const getPostAxios = createAsyncThunk(
+  "post/getPostAxios",
+  async (_, { dispatch }) => {
+    dispatch(setLoading(true));
+    const resp = await Postapi.getPosts();
+    dispatch(setPost(resp.boardResponseDtos));
+    return resp;
+  }
 );
 
-export const addPostFB = createAsyncThunk(
-  "post/addPostFB",
-  async (postData, { getState }) => {
+export const getOnePostAxios = createAsyncThunk(
+  "post/getOnePostAxios",
+  async (boardId, { dispatch }) => {
+    dispatch(setLoading(true));
+    const res = await Postapi.getOnePost({ boardId, dispatch });
+    return res.data;
+  }
+);
+
+export const addPostAxios = createAsyncThunk(
+  "post/addPostAxios",
+  async ({ postData, navigate }, { getState, dispatch }) => {
+    dispatch(setLoading(true));
     const _image = getState().image.preview;
     const _userid = getState().user.user_info.userid;
     const url = await Storage.uploadFile(_image, _userid);
-    const docRef = await FSapi.addPost({ ...postData, imageurl: url });
-    return { ...postData, boardId: docRef.id, imageurl: url };
+    const res = await Postapi.addPost({
+      postData: { ...postData, imageUrl: url },
+      navigate,
+    });
   }
 );
 
-export const updatePostFB = createAsyncThunk(
-  "post/updatePostFB",
-  async (wordObj) => {
-    await FSapi.updatePost(wordObj);
-    return wordObj;
+export const updatePostAxios = createAsyncThunk(
+  "post/updatePostAxios",
+  async ({ boardId, postData, navigate }, { getState, dispatch }) => {
+    dispatch(setLoading(true));
+    const _image = getState().image.preview;
+    const _userid = getState().user.user_info.userid;
+    let result;
+    if (_image !== postData.imageurl) {
+      const url = await Storage.uploadFile(_image, _userid);
+      result = await Postapi.editPost({
+        boardId,
+        postData: { ...postData, imageUrl: url },
+        navigate,
+      });
+    } else {
+      result = await Postapi.editPost({ boardId, postData, navigate });
+    }
+    return { result, postData, boardId };
   }
 );
 
-export const deletePostFB = createAsyncThunk(
-  "post/deletePostFB",
-  async (boardId) => {
-    await FSapi.deletePost(boardId);
+export const deletePostAxios = createAsyncThunk(
+  "post/deletePostAxios",
+  async ({ username, boardId, navigate }) => {
+    await Postapi.deletePost({ username, boardId, navigate });
     return boardId;
   }
 );
 
-//createSlice
-//get :리듀서 함수의 객체, 슬라이스 이름, 초기 상태 값을 받아들인다
-//create :해당 액션 생성자와 액션 유형으로 슬라이스 리듀서를 자동으로 생성
+export const postLikeAxios = createAsyncThunk(
+  "post/postLikeAxios",
+  async (
+    { userid, boardId, newLike, updatedCount, navigate },
+    { dispatch }
+  ) => {
+    return {
+      result: await Postapi.postLike({ userid, boardId, navigate, dispatch }),
+      newLike,
+      updatedCount,
+      boardId,
+    };
+  }
+);
+
+export const postLikeCancelAxios = createAsyncThunk(
+  "post/postLikeCancelAxios",
+  async (
+    { userid, boardId, newLike, updatedCount, navigate },
+    { dispatch }
+  ) => {
+    return {
+      result: await Postapi.postLikeCancel(
+        { userid, boardId, navigate },
+        { dispatch }
+      ),
+      newLike,
+      updatedCount,
+      boardId,
+    };
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
-  initialState: { data: [] },
-  Reducers: {
-    [getPostFB.fulfilled]: (state, action) => {
-      state.data = action.payload;
+  initialState,
+  reducers: {
+    setLoading: (state, action) => {
+      state.is_loading = action.payload;
     },
-    [addPostFB.fulfilled]: (state, action) => {
-      state.data = [...state.data, action.payload];
+    setPost: (state, action) => {
+      const postlist = action.payload;
+      state.data = postlist;
     },
-    [updatePostFB.fulfilled]: (state, action) => {
-      state.list = state.list.map((word) => {
-        if (word.id === action.payload.id) {
-          return action.payload;
-        }
-        return word;
-      });
+    setNewPaging: (state, action) => {
+      state.data = initialState.data;
+      state.paging.load = true;
+      state.paging.next = null;
     },
-    [deletePostFB.fulfilled]: (state, action) => {
+  },
+  extraReducers: {
+    [getPostAxios.fulfilled]: (state, action) => {
+      // state.paging.next = action.payload.lastVisible;
+      state.is_loading = false;
+    },
+    [getOnePostAxios.fulfilled]: (state, action) => {
+      state.is_loading = false;
+    },
+    [addPostAxios.fulfilled]: (state, action) => {
+      state.is_loading = false;
+    },
+    [updatePostAxios.fulfilled]: (state, action) => {
+      const { result, postData, boardId } = action.payload;
+      if (result) {
+        const updated = state.data.map((post) => {
+          if (post.boardId === boardId) {
+            return {
+              ...post,
+              imageurl: postData.imageUrl,
+              content: postData.content,
+              grid: postData.grid,
+            };
+          }
+          return post;
+        });
+        state.data = updated;
+      }
+      state.is_loading = false;
+    },
+    [deletePostAxios.fulfilled]: (state, action) => {
       state.data = state.data.filter((post) => post.boardId !== action.payload);
+    },
+    [postLikeAxios.fulfilled]: (state, action) => {
+      const { result, newLike, updatedCount, boardId } = action.payload;
+      if (result) {
+        state.data = state.data.map((card) => {
+          if (card.boardId === boardId) {
+            return { ...card, likes: newLike, likeCount: updatedCount };
+          } else return card;
+        });
+      }
+    },
+    [postLikeCancelAxios.fulfilled]: (state, action) => {
+      const { result, newLike, updatedCount, boardId } = action.payload;
+      state.data =
+        result &&
+        state.data.map((card) => {
+          if (card.boardId === boardId) {
+            return { ...card, likes: newLike, likeCount: updatedCount };
+          } else return card;
+        });
     },
   },
 });
 
-export const { createPost, deletePost, editPost, postLike, postLikeCancel } =
-  postSlice.actions;
+export const {
+  setLoading,
+  setPost,
+  setNewPaging,
+  createPost,
+  deletePost,
+  editPost,
+  postLike,
+  postLikeCancel,
+} = postSlice.actions;
 
 export default postSlice.reducer;

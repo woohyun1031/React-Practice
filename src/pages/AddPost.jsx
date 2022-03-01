@@ -1,21 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+//import dayjs from 'dayjs';
+
 import styled from 'styled-components';
+
 import GridButton from '../components/GridButton';
 import Button from '../elements/Button';
-import { addPostFB } from '../redux/modules/post';
+
+import { resetGrid, setGrid } from '../redux/modules/grid';
+import { addPostAxios, updatePostAxios } from '../redux/modules/post';
 import { setPreview } from '../redux/modules/image';
 
-const AddPost = (props) => {
+const AddPost = () => {
   const preview = useSelector(state => state.image.preview);
   const userInfo = useSelector(state => state.user.user_info);
-  console.log(userInfo);
   const gridStyle = useSelector(state => state.grid.grid);
+  const location = useLocation();
+  const param = useParams();
+  const isEdit = param.postId ? true : false;
   const contentRef = useRef();
   const fileRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEdit) {
+      dispatch(setGrid(location.state.grid));
+      dispatch(setPreview(location.state.imageUrl));
+      contentRef.current.value = location.state.content;
+    }
+  }, []);
 
   const selectPhoto = e => {
     const fileReader = new FileReader();
@@ -32,25 +48,46 @@ const AddPost = (props) => {
     e.preventDefault();
 
     const content = contentRef.current.value;
-    if (content === '' && !preview) {
+    if (content === '' || !preview) {
       alert('사진 첨부와 게시글을 작성해주세요');
       return;
     }
 
     const newPost = {
-      creater: userInfo.username,
+      username: userInfo.username,
       content: content,
-      imageurl: null,
+      imageUrl: null,
       grid: gridStyle,
-      likeCount: '0',
-      createdAt: new Date().toDateString(),
-      likes: [],
+      // likeCount: '0', //
+      // createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'), //
+      // likes: [], //
     };
-    console.log(newPost);
-    dispatch(addPostFB(newPost));
-    dispatch(setPreview(null));
 
-    navigate('/');
+    // const editedPost = {
+    //   // ...location.state, //
+    //   username: userInfo.username,
+    //   imageUrl: location.state.imageurl,
+    //   content: content,
+    //   grid: gridStyle,
+    // };
+
+    !isEdit
+      ? dispatch(addPostAxios({ postData: newPost, navigate }))
+      : dispatch(
+          updatePostAxios({
+            boardId: param.postId,
+            postData: {
+              // ...location.state, //
+              username: userInfo.username,
+              imageUrl: location.state.imageurl,
+              content: content,
+              grid: gridStyle,
+            },
+            navigate,
+          })
+        );
+    dispatch(setPreview(null));
+    dispatch(resetGrid());
   };
 
   return (
@@ -70,7 +107,7 @@ const AddPost = (props) => {
           autoFocus
         ></textarea>
         <input ref={fileRef} onChange={selectPhoto} type='file' />
-        <Button name={'게시글 작성'} />
+        <Button name={param.postId ? '게시글 수정' : '게시글 작성'} />
       </PostForm>
     </>
   );

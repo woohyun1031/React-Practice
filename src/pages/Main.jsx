@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 import { FaPlusCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getPostAxios, getPostFB } from '../redux/modules/post';
+import InfinityScroll from '../components/InfinityScroll';
 
 const Main = ({ isLogin }) => {
-  const cards = useSelector((state) => state.post.data);
-  console.log(cards)
+  const { data, is_loading, paging } = useSelector(state => state.post);
+  console.log(data,"fuck")
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  //isLogin에 따라서
   const addPost = () => {
     if (!isLogin) {
       alert('로그인 후 작성해주세요');
@@ -20,16 +24,29 @@ const Main = ({ isLogin }) => {
   };
 
   return (
-    <ul>
-      {cards.map((card) => (
+    <InfinityScroll
+      callNext={() => {
+        dispatch(getPostAxios());
+      }}
+      is_next={paging.load ? true : false}
+      loading={is_loading}
+    >
+    <ListBox>
+      {data.map(card => (
         <PostCard key={card.boardId} card={card} />
       ))}
       <AddButton onClick={addPost}>
         <FaPlusCircle />
       </AddButton>
-    </ul>
+    </ListBox>
+    </InfinityScroll>
   );
 };
+
+const ListBox = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 const AddButton = styled.button`
   position: fixed;

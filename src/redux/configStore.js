@@ -5,8 +5,11 @@ import postReducer from "./modules/post";
 import imageReducer from "./modules/image";
 import gridReducer from "./modules/grid";
 
+import postdetailReducer from "./modules/postdetail";
+
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
+import logger from "redux-logger";
 
 export const history = createBrowserHistory();
 const route_history = connectRouter(history);
@@ -16,6 +19,8 @@ export const store = configureStore({
     post: postReducer,
     image: imageReducer,
     grid: gridReducer,
+    postdetail: postdetailReducer,
   },
-  router: route_history,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });
