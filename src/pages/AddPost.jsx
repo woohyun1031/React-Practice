@@ -5,7 +5,7 @@ import Button from '../elements/Button';
 
 const AddPost = (props) => {
   const param = useParams();
-  // console.log(param);
+  console.log(param,"addpost param");
   const contentRef = useRef();
   const navigate = useNavigate();
 
@@ -38,7 +38,6 @@ const AddPost = (props) => {
       ></textarea>
       <div>이미지추가</div>
       <Button name={'게시글 작성'} />
-      <Button name={'no'}/>
     </PostForm>
   );
 };

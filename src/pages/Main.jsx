@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 import { FaPlusCircle } from 'react-icons/fa';
-import { resp } from '../shared/response';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Main = (props) => {
-  const [cards, setCards] = useState([]);
+const Main = ({ isLogin }) => {
+  const cards = useSelector((state) => state.post.data);
+  console.log(cards)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCards(resp);
-  });
-
-  const goToAddPost = () => {
+  const addPost = () => {
+    if (!isLogin) {
+      alert('로그인 후 작성해주세요');
+      navigate('/login');
+      return;
+    }
     navigate('/post');
   };
 
   return (
     <ul>
       {cards.map((card) => (
-        <PostCard key={card.id} card={card} />
+        <PostCard key={card.boardId} card={card} />
       ))}
-      <AddButton onClick={goToAddPost}>
+      <AddButton onClick={addPost}>
         <FaPlusCircle />
       </AddButton>
     </ul>

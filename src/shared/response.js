@@ -1,33 +1,78 @@
-const RESP = {
-  posts: [
+export const RESP = {
+  data: [
     {
-      id: '0',
-      title: 'title',
-      nickName: 'sunny',
-      content: 'content',
-      likeCount: '3',
-      createdAt: '2022-02-18 14:00:00',
-      modifiedAt: '2022-02-18 15:00:00',
+      boardId: "1",
+      creater: "sam",
+      content: "content",
+      imageurl: "url",
+      grid: "column",
+      likeCount: "2",
+      createdAt: "2022-02-19 18:00:00",
+      likes: [
+        {
+          userId: "123",
+        },
+      ],
     },
     {
-      id: '1',
-      title: 'title',
-      nickName: 'tom',
-      content: 'content',
-      likeCount: '3',
-      createdAt: '2022-02-18 14:00:00',
-      modifiedAt: '2022-02-18 15:00:00',
+      boardId: "2",
+      creater: "lilly",
+      content: "content",
+      imageurl: "url",
+      grid: "row",
+      likeCount: "1",
+      createdAt: "2022-02-19 18:00:00",
+      likes: [
+        {
+          userId: "userId",
+        },
+      ],
     },
     {
-      id: '2',
-      title: 'title',
-      nickName: 'bobby',
-      content: 'content',
-      likeCount: '3',
-      createdAt: '2022-02-18 14:00:00',
-      modifiedAt: '2022-02-18 15:00:00',
+      boardId: "3",
+      creater: "tobby",
+      content: "content",
+      imageurl: "url",
+      grid: "row-reverse",
+      likeCount: "0",
+      createdAt: "2022-02-19 18:00:00",
+      likes: [
+        {
+          userId: "123",
+        },
+      ],
+    },
+    {
+      boardId: "4",
+      creater: "bob",
+      content: "content",
+      imageurl: "url",
+      grid: "row",
+      likeCount: "1",
+      createdAt: "2022-02-19 18:00:00",
+      likes: [
+        {
+          userId: "userId",
+        },
+      ],
+    },
+    {
+      boardId: "5",
+      creater: "sunny",
+      content: "content",
+      imageurl: "url",
+      grid: "row-reverse",
+      likeCount: "3",
+      createdAt: "2022-02-19 18:00:00",
+      likes: [
+        {
+          userId: "userId",
+        },
+      ],
     },
   ],
+  userData: {
+    userId: "123",
+    username: "sunny",
+  },
 };
-
-export const resp = RESP.posts;
