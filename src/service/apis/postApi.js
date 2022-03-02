@@ -2,27 +2,32 @@ import axios from "axios";
 import { setOnePost } from "../../redux/modules/postdetail";
 import { logoutAxios } from "../../redux/modules/user";
 
+//승훈님:13.124.233.197
+//광훈님:15.164.99.92
+
 class PostApi {
   constructor() {
+    this.base = "http://13.124.233.197";
     //this.base = "http://15.164.99.92";
-    this.base = process.env.REACT_APP_BE_IP_LYW;
+    //this.base = process.env.REACT_APP_BE_IP_LYW;
   }
 
   async getPosts() {
+    console.log("get post Axios start");
     const getpostConfig = {
-      // method: 'get',
-      url: `${this.base}/api/board`,
+      method: "get",
+      url: `${this.base}/api/posts`,
       headers: {},
     };
 
     return axios(getpostConfig)
       .then((res) => {
-        console.log(res);
+        console.log(res, "result in get post api");
         return res.data;
       })
       .catch((err) => {
-        console.log(err);
-        console.log(err.messages);
+        console.log(err, "err in get post api");
+        console.log(err.messages, "err.messages in get post api");
       });
   }
 

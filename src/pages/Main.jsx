@@ -47,7 +47,7 @@ const Main = ({ isLogin }) => {
     >
     <ListBox>
       {data.map(card => (
-        <PostCard key={card.boardId} card={card} />
+        <PostCard key={card.create_date} card={card} />
       ))}
       <AddButton onClick={addPost}>
         <FaPlusCircle />
@@ -57,9 +57,10 @@ const Main = ({ isLogin }) => {
   );
 };
 
-const ListBox = styled.ul`
+const ListBox = styled.div`
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
 `;
 
 const AddButton = styled.button`

@@ -17,20 +17,22 @@ import { getPostAxios,getPostFB,setNewPaging } from './redux/modules/post';
 import TodoTemplate from "./components/TodoTemplate";
 import { createGlobalStyle } from "styled-components";
 import firebaseApp from "./service/firebase/firebase"
+import {getCookie} from "./shared/Cookie"
 
 function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.post.is_loading);
   const isLogin = useSelector(state => state.user.is_login);
-  const isToken = sessionStorage.getItem('token') ? true : false;
+  const isToken = getCookie('token') ? true : false;
+  console.log(isToken,"isToken");
 
-  // useEffect(() => {
-  //   //isToken && dispatch(getUser());
-  //   dispatch(getUser());
-  //   dispatch(setNewPaging());
-  //   dispatch(getPostAxios());
-  // },[isLogin, isToken]); //[isLogin, isToken]
-  // console.log(isLoading,"isLoding")
+  useEffect(() => {
+    //isToken && dispatch(getUser());
+    dispatch(getUser()); //현재 session에 있는 userdata 가져오기
+    dispatch(setNewPaging()); //
+    dispatch(getPostAxios());
+  },[isLogin, isToken]); //[isLogin, isToken]
+  console.log(isLoading,"isLoding")
 
   return (
     <>

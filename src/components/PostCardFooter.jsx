@@ -14,14 +14,14 @@ const PostCardFooter = ({ likeCount, likes, boardId }) => {
   const [onLike, setOnLike] = useState(false);
 
   // 로그인한 유저가 게시글을 좋아요한 리스트에 있으면 onLike=true
-  useEffect(() => {
-    if (
-      likes.length > 0 &&
-      likes.filter(user => user.userId === parseInt(userid)).length >= 1
-    ) {
-      setOnLike(true);
-    }
-  }, [userid]);
+  // useEffect(() => {
+  //   if (
+  //     likes.length > 0 &&
+  //     likes.filter(user => user.userId === parseInt(userid)).length >= 1
+  //   ) {
+  //     setOnLike(true);
+  //   }
+  // }, [userid]);
 
   const handleLike = e => {
     if (!isLogin) {

@@ -10,7 +10,7 @@ const Postapi = new PostApi();
 
 const initialState = {
   data: [],
-  paging: { load: true, next: null, size: 10 },
+  paging: { load: true, next: null, size: 2 },
   is_loading: false,
 };
 
@@ -22,9 +22,12 @@ const initialState = {
 export const getPostAxios = createAsyncThunk(
   "post/getPostAxios",
   async (_, { dispatch }) => {
+    console.log("start getpostaxios in redux post");
     dispatch(setLoading(true));
     const resp = await Postapi.getPosts();
-    dispatch(setPost(resp.boardResponseDtos));
+    console.log(resp, "response server res.data");
+    //dispatch(setPost(resp.boardResponseDtos));
+    dispatch(setPost(resp));
     return resp;
   }
 ); //getpostaxios => loading=true => api.getposts
@@ -124,6 +127,7 @@ export const postSlice = createSlice({
     setPost: (state, action) => {
       const postlist = action.payload;
       state.data = postlist;
+      console.log(state.data, "setPost data");
     },
     setNewPaging: (state, action) => {
       state.data = initialState.data;

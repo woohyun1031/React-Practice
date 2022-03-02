@@ -94,6 +94,7 @@ export const userSlice = createSlice({
       state.user_info = {
         username: action.payload.username,
         userid: action.payload.username,
+        //userid: action.payload.userid,
       };
       state.is_login = true;
       console.log(state.user_info, state.is_login, "state.user,is_login");

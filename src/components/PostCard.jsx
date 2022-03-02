@@ -10,50 +10,45 @@ const PostCard = memo(({ card }) => {
   const isLogin = useSelector(state => state.user.is_login);
   const param = useParams();
   const isDetail = param.postId ? true : false;
+  console.log(card,"card list")
   const {
-    boardId,
-    creater,
-    content,
-    imageUrl,
-    grid,
-    likeCount,
-    createdAt,
-    likes,
+    post_id,
+    user_id,
+    contents,
+    img_url,
+    //grid,
+    like_cnt,
+    create_date,
+    //likes,
   } = card;
 
   const navigate = useNavigate();
 
   const goToDetail = e => {
-    !isDetail && isLogin && navigate(`/post/${boardId}`);
+    !isDetail && isLogin && navigate(`/post/${post_id}`);
   };
 
   return (
     <CardBox onClick={goToDetail} className={isDetail ? 'detail' : 'main'}>
       <StyleBox>
-        <PostCardHeader creater={creater} date={createdAt} />
-        <PostCardContent grid={grid} content={content} image={imageUrl} />
+        <PostCardHeader creater={user_id} date={create_date} />
+        <PostCardContent content={contents} image={img_url} />
         <PostCardFooter
-          card={card}
-          likeCount={likeCount}
-          likes={likes}
-          boardId={boardId}
+          //card={card}
+          likeCount={like_cnt}
+          //likes={likes}
+          boardId={post_id}
         />
       </StyleBox>
     </CardBox>
   );
 });
 
-const CardBox = styled.li`
+const CardBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  height: 100%;
-
-  // @media screen and (max-width: 50rem) {
-  //   flex-direction: row;
-  //   flex-wrap: wrap;
-  //   width: 50%;
-  // }
+  width: 100%;
+  
   @media screen and (max-width: 40rem) {
     flex-direction: row;
     flex-wrap: wrap;
