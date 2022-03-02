@@ -58,18 +58,7 @@ const AddPost = () => {
       content: content,
       imageUrl: null,
       grid: gridStyle,
-      // likeCount: '0', //
-      // createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'), //
-      // likes: [], //
     };
-
-    // const editedPost = {
-    //   // ...location.state, //
-    //   username: userInfo.username,
-    //   imageUrl: location.state.imageurl,
-    //   content: content,
-    //   grid: gridStyle,
-    // };
 
     !isEdit
       ? dispatch(addPostAxios({ postData: newPost, navigate }))
@@ -92,7 +81,7 @@ const AddPost = () => {
 
   return (
     <>
-      <GridButton grid={gridStyle} />
+      {/* <GridButton grid={gridStyle} /> */}
       <PostForm onSubmit={addNewPost}>
         <img
           src={preview ? preview : 'http://via.placeholder.com/400x300'}

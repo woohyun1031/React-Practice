@@ -4,6 +4,7 @@ import { logoutAxios } from "../../redux/modules/user";
 
 //승훈님:13.124.233.197
 //광훈님:15.164.99.92
+//현우님:3.36.64.184:8080
 
 class PostApi {
   constructor() {

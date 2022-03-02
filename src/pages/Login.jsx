@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from '../components/LoginForm';
 
-const Login = ({ isLogin }) => {
+const Login = ({ isToken }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogin) {
+    if (isToken) {
       alert('이미 로그인이 되어있습니다.');
       navigate('/');
     }

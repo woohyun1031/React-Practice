@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { getPostAxios, getPostFB, setNewPaging } from '../redux/modules/post';
 import { logoutAxios, logoutFB } from '../redux/modules/user';
 
-const Navbar = ({ isLogin }) => {
+const Navbar = ({ isToken }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,14 +27,14 @@ const Navbar = ({ isLogin }) => {
     dispatch(logoutAxios({ navigate }));
   };
 
-  // if (isLogin) {
+  // if (isToken) {
   return (
     <Header>
       <LogoBox onClick={goToMain}>
         <LogoImg src='/img/logo.png' alt='logo' />
         <Title>Magazine</Title>
       </LogoBox>
-      {isLogin ? (
+      {isToken ? (
         <div className='buttons'>
           <Button onClick={_logout}>로그아웃</Button>
         </div>

@@ -50,11 +50,9 @@ export const signinAxios = createAsyncThunk(
 export const logoutAxios = createAsyncThunk(
   "user/logoutAxios",
   async ({ navigate }, { dispatch }) => {
-    // const result = await Userapi.signOut({ navigate });
-    // result && dispatch(deleteUserFromSession());
-    // return result;
     dispatch(deleteUserFromSession());
     navigate("/", { replace: true });
+    console.log("로그아웃 완전 navigate 완료!!");
     return true;
   }
 );
@@ -74,12 +72,11 @@ export const userSlice = createSlice({
     getUser: (state, action) => {
       state.user_info.username = sessionStorage.getItem("username");
       state.user_info.userid = sessionStorage.getItem("userId");
-      state.is_login = true;
+      //state.is_login = true;
     },
     deleteUserFromSession: (state, action) => {
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("username");
-      sessionStorage.removeItem("userId");
+      deleteCookie("token");
+      console.log("token delete!!");
     },
   },
   extraReducers: {

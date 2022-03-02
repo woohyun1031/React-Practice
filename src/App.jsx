@@ -27,26 +27,25 @@ function App() {
   console.log(isToken,"isToken");
 
   useEffect(() => {
-    //isToken && dispatch(getUser());
-    dispatch(getUser()); //현재 session에 있는 userdata 가져오기
-    dispatch(setNewPaging()); //
+    isToken && dispatch(getUser());
+    dispatch(setNewPaging());
     dispatch(getPostAxios());
-  },[isLogin, isToken]); //[isLogin, isToken]
+  }, [isLogin, isToken]);
   console.log(isLoading,"isLoding")
 
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
-        {/* {isLoading && <Loading />} */}
-        <Navbar isLogin={isLogin} />
+        {isLoading && <Loading />}
+        <Navbar isToken={isToken} />
         <Routes>
           <Route path="/" element={<Main isLogin={isLogin} />} />
           <Route path="/post" element={<AddPost />} />
           <Route path="/edit/:postId" element={<AddPost />} />
           <Route path="/post/:postId" element={<Detail />} />
-          <Route path="/register" element={<Register isLogin={isLogin} />} />
-          <Route path="/login" element={<Login isLogin={isLogin} />} />
+          <Route path="/register" element={<Register isToken={isToken} />} />
+          <Route path="/login" element={<Login isToken={isToken} />} />
         </Routes>
       </TodoTemplate>
     </>

@@ -5,8 +5,8 @@ const PostCardContent = ({content, image }) => {
   return (
     //<ContentBox grid={grid}>
     <ContentBox>
+      <ContentImg src={image} alt='image error' />
       <ContentText>{content}</ContentText>
-      <ContentImg src={image} alt='image' />
     </ContentBox>
   );
 };
@@ -18,10 +18,10 @@ const PostCardContent = ({content, image }) => {
 //${props =>
 //  props.grid === 'column' ? 'margin: 0 auto; width: 100%;' : 'width: 50%;'};
 const ContentBox = styled.div`
-  margin: 0.7em;
+  margin: 0.7em 0px;
   display: flex;
   flex-direction: column
-  hieght: 100%;
+  
 `;
 
 const ContentText = styled.div`
@@ -31,7 +31,8 @@ const ContentText = styled.div`
 
 const ContentImg = styled.img`
   display: block;
-  margin: 0 auto; width: 100%;
+  margin: 0 auto; 
+  width: 100%;
 `;
 
 export default PostCardContent;

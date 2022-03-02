@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
 
-const Register = ({ isLogin }) => {
+const Register = ({ isToken }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogin) {
+    if (isToken) {
       alert('이미 로그인이 되어있습니다.');
       navigate('/', { replace: true });
     }

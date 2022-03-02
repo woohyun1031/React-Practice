@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 import { FaPlusCircle } from 'react-icons/fa';
@@ -9,23 +9,16 @@ import InfinityScroll from '../components/InfinityScroll';
 
 const Main = ({ isLogin }) => {
   const { data, is_loading, paging } = useSelector(state => state.post);
-  //data:{
-  // "boardId": "0",
-  // "creater": "sunny",
-  // "content": "첫번째 게시글 입니다",
-  // "imageurl": "https://cdn.pixabay.com/photo/2020/03/25/16/01/children-4967808_960_720.jpg",
-  // "grid": "column",
-  // "likeCount": "2",
-  // "createdAt": "2022-02-19 18:00:00",
-  // "likes": [{ "userid": "0" }, { "userid": "1" }]
-  // },
-  //is_loading:
-  //paging:
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   console.log(data,"main page data")
   console.log(is_loading,"main page is_loading")
   console.log(paging,"main page paging")
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getPostAxios());
+}, []);
 
   //isLogin에 따라서
   const addPost = () => {
@@ -38,13 +31,13 @@ const Main = ({ isLogin }) => {
   };
 
   return (
-    <InfinityScroll
-      callNext={() => {
-        dispatch(getPostAxios());
-      }}
-      is_next={paging.load ? true : false}
-      loading={is_loading}
-    >
+    // <InfinityScroll
+    //   callNext={() => {
+    //     dispatch(getPostAxios());
+    //   }}
+    //   is_next={paging.load ? true : false}
+    //   loading={is_loading}
+    // >
     <ListBox>
       {data.map(card => (
         <PostCard key={card.create_date} card={card} />
@@ -53,7 +46,7 @@ const Main = ({ isLogin }) => {
         <FaPlusCircle />
       </AddButton>
     </ListBox>
-    </InfinityScroll>
+    // </InfinityScroll>
   );
 };
 
@@ -67,7 +60,7 @@ const AddButton = styled.button`
   position: fixed;
   right: 2rem;
   bottom: 1.5rem;
-  font-size: 2rem;
+  font-size: 5rem;
 `;
 
 export default Main;
