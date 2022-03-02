@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import UserApi from "../../service/apis/userApi";
 import FirebaseAuth from "../../service/firebase/firebaseAuth";
+import { setCookie, deleteCookie } from "../../shared/Cookie";
 
 const FBapi = new FirebaseAuth();
 const Userapi = new UserApi();
@@ -13,10 +14,20 @@ const initialState = {
   is_login: false,
 };
 
+//createAsyncThunk
+//Action Type 문자열과 Promise를 반환하는 함수를 수락하고
+//pending(진행중)/fulfilled(완료)/rejected(실패) 해당 Promise를 기반으로
+//Action Type을 전달하는 Thunk를 생성합니다.
+
+//회원가입 signup
+//sighupAxios({ registerData, navigate }) =>
 export const sighupAxios = createAsyncThunk(
-  "user/sighupAxios",
+  "user/sighupAxios", //action type =>name:user reducer에서 sighupAxios를 찾아간다
   async ({ registerData, navigate }) => {
-    const sighupResult = await Userapi.signUp({ registerData, navigate });
+    console.log(registerData, "registerData in redux");
+    //Promise를 반환하는 함수
+    const sighupResult = await Userapi.signUp({ registerData, navigate }); //return res.data;
+    //sighupResult: 요청 후 받은 데이터
     return sighupResult;
   }
 );
@@ -24,10 +35,14 @@ export const sighupAxios = createAsyncThunk(
 export const signinAxios = createAsyncThunk(
   "user/sighinAxios",
   async ({ loginData, navigate }, { dispatch }) => {
-    const userData = await Userapi.signIn({ loginData, navigate });
-    if (userData) {
-      dispatch(setUserToSession(userData.userData));
-      return userData;
+    console.log(loginData, "loginData in redux");
+    const result = await Userapi.signIn({ loginData, navigate }); //result res.data
+    console.log(result, "result in redux");
+    if (result) {
+      //console.log(userData.userData, "userData.userData");
+      console.log(result.data, "token value before setcookie");
+      setCookie("token", result.data);
+      return loginData;
     }
   }
 );
@@ -44,6 +59,9 @@ export const logoutAxios = createAsyncThunk(
   }
 );
 
+//createSlice()
+//리듀서 함수의 객체, slice 이름, initial state 값을 받아들이고
+//해당 Action creator와 Action type으로 slice reducer를 자동으로 생성합니다.
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -65,17 +83,20 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
+    //sighupAxios.fulfilled 이후
     [sighupAxios.fulfilled]: (state, action) => {
       // state.user_info = action.payload.user_info;
       // state.is_login = action.payload.is_login;
-      console.log(action.payload);
+      console.log(action.payload, "sighupAxios.fulfilled action.payload");
     },
     [signinAxios.fulfilled]: (state, action) => {
+      console.log(action.payload.username, "action.payload.username"); //woohyun
       state.user_info = {
-        username: action.payload.userData.username,
-        userid: action.payload.userData.userId,
+        username: action.payload.username,
+        userid: action.payload.username,
       };
       state.is_login = true;
+      console.log(state.user_info, state.is_login, "state.user,is_login");
     },
     [logoutAxios.fulfilled]: (state, action) => {
       if (action.payload) {

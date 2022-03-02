@@ -14,6 +14,11 @@ const initialState = {
   is_loading: false,
 };
 
+//createAsyncThunk
+//Action Type 문자열과 Promise를 반환하는 함수를 수락하고
+//pending/fulfilled/rejected 해당 Promise를 기반으로
+//Action Type을 전달하는 Thunk를 생성합니다.
+
 export const getPostAxios = createAsyncThunk(
   "post/getPostAxios",
   async (_, { dispatch }) => {
@@ -22,7 +27,7 @@ export const getPostAxios = createAsyncThunk(
     dispatch(setPost(resp.boardResponseDtos));
     return resp;
   }
-);
+); //getpostaxios => loading=true => api.getposts
 
 export const getOnePostAxios = createAsyncThunk(
   "post/getOnePostAxios",

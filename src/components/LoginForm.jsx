@@ -18,16 +18,16 @@ const LoginForm = props => {
     const email = emailRef.current.value;
     const pw = pwRef.current.value;
 
-    // if (!checkEmail(email).res) {
-    //   emailRef.current.focus();
-    //   alert(checkEmail(email).msg);
-    //   return;
-    // }
+    //if (!checkEmail(email).res) {
+    //  emailRef.current.focus();
+    //  alert(checkEmail(email).msg);
+    //  return;
+    //}
 
-    // if (pw === '') {
-    //   pwRef.current.focus();
-    //   alert('비밀번호를 입력해주세요');
-    // }
+    if (pw === '') {
+      pwRef.current.focus();
+      alert('비밀번호를 입력해주세요');
+    }
 
     const loginData = {
       username: email,

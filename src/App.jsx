@@ -24,13 +24,13 @@ function App() {
   const isLogin = useSelector(state => state.user.is_login);
   const isToken = sessionStorage.getItem('token') ? true : false;
 
-  useEffect(() => {
-    //isToken && dispatch(getUser());
-    dispatch(getUser());
-    dispatch(setNewPaging());
-    dispatch(getPostAxios());
-  },[isLogin, isToken]); //[isLogin, isToken]
-  console.log(isLoading,"isLoding")
+  // useEffect(() => {
+  //   //isToken && dispatch(getUser());
+  //   dispatch(getUser());
+  //   dispatch(setNewPaging());
+  //   dispatch(getPostAxios());
+  // },[isLogin, isToken]); //[isLogin, isToken]
+  // console.log(isLoading,"isLoding")
 
   return (
     <>

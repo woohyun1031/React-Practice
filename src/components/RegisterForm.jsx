@@ -16,18 +16,45 @@ const RegisterForm = props => {
 
   const onRegist = e => {
     e.preventDefault();
+    //submit은 작동되지만 새로 실행되는건 아니다
 
-    const email = emailRef.current.value;
+    //ref로 input 값을 받아온다
+    const email = emailRef.current.value; 
     const nickname = nicknameRef.current.value;
     const pw = pwRef.current.value;
     const pwCheck = pwCheckRef.current.value;
+
+    // if (!checkEmail(email).res) {
+    //   emailRef.current.focus();
+    //   alert(checkEmail(email).msg);
+    //   return;
+    // }
+
+    //check를 통해 nickname과 pw를 검사한다
+    if (!checkNickname(nickname).res) {
+      nicknameRef.current.focus();
+      alert(checkNickname(nickname).msg);
+      return;
+    }
+
+    if (!checkPW(pw, pwCheck, nickname).res) {
+      if (checkPW(pw, pwCheck, nickname).focus === 'pwRef') {
+        pwRef.current.focus();
+      } else if (checkPW(pw, pwCheck, nickname).focus === 'pwCheckRef') {
+        pwCheckRef.current.focus();
+      }
+      alert(checkPW(pw, pwCheck, nickname).msg);
+      return;
+    }
+
     const registerData = {
       username: email,
       name: nickname,
       password: pw,
       check_password: pwCheck,
     };
-
+    console.log(registerData,"registerData");
+    //signupAxios를 실행합니다
     dispatch(sighupAxios({ registerData, navigate }));
   };
 
