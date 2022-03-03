@@ -27,13 +27,25 @@ const Navbar = ({ isToken }) => {
     dispatch(logoutAxios({ navigate }));
   };
 
+  const today = new Date();
+  const dateString = today.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const dayName = today.toLocaleDateString("ko-KR", { weekday: "long" });
+
   // if (isToken) {
   return (
     <Header>
-      <LogoBox onClick={goToMain}>
+      {/* <LogoBox onClick={goToMain}>
         <LogoImg src='/img/logo.png' alt='logo' />
         <Title>Magazine</Title>
-      </LogoBox>
+      </LogoBox> */}
+      <TodoHeadBlock>
+      <h1>{dateString}</h1>
+      <h3 className="day">{dayName}</h3>
+    </TodoHeadBlock>
       {isToken ? (
         <div className='buttons'>
           <Button onClick={_logout}>로그아웃</Button>
@@ -63,13 +75,32 @@ const Navbar = ({ isToken }) => {
 };
 
 const Header = styled.header`
-  width: 100%;
-  padding: 2em 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  // background-color: lightgrey;
+width: 100%;
+padding: 2em 0;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid #e9ecef;
+// background-color: lightgrey;
 `;
+
+const TodoHeadBlock = styled.div`
+  h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #343a40;
+  }
+  .day {
+    margin-top: 4px;
+    color: #868e96;
+    font-size: 21px;
+  }
+  .tasks-left {
+    color: #20c997;
+    font-size: 18px;
+    margin-top: 40px;
+    font-weight: bold;
+  }`
 
 const LogoBox = styled.div`
   display: flex;
