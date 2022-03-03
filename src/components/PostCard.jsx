@@ -65,12 +65,12 @@ const CardBox = styled.div`
 const StyleBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.5em 0.3em;
+  margin: 20px 0px;
   padding: 1em;
   width: calc(100%-0.6em);
-  border: 2px solid lightgrey;
+  border: 2px solid white;
   border-radius: 8px;
-  // background-color: lightblue;
+  background-color: lightblue;
 `;
 
 export default PostCard;

@@ -40,7 +40,7 @@ function App() {
         {isLoading && <Loading />}
         <Navbar isToken={isToken} />
         <Routes>
-          <Route path="/" element={<Main isLogin={isLogin} />} />
+          <Route path="/" element={<Main isToken={isToken} />} />
           <Route path="/post" element={<AddPost />} />
           <Route path="/edit/:postId" element={<AddPost />} />
           <Route path="/post/:postId" element={<Detail />} />

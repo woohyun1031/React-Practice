@@ -6,28 +6,39 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import GridButton from '../components/GridButton';
+//import GridButton from '../components/GridButton';
 import Button from '../elements/Button';
 
-import { resetGrid, setGrid } from '../redux/modules/grid';
+//import { resetGrid, setGrid } from '../redux/modules/grid';
 import { addPostAxios, updatePostAxios } from '../redux/modules/post';
 import { setPreview } from '../redux/modules/image';
 
 const AddPost = () => {
   const preview = useSelector(state => state.image.preview);
+
   const userInfo = useSelector(state => state.user.user_info);
-  const gridStyle = useSelector(state => state.grid.grid);
+
+  //const gridStyle = useSelector(state => state.grid.grid);
+
+  //location으로 pathname과 search값을 알 수 있다
   const location = useLocation();
-  const param = useParams();
+  console.log(location,"Add post location")
+
+  //edit인지 post인지 check를 위해
+  const param = useParams(); //:postId
+  //parm이 있으면 edit, 아님 post
   const isEdit = param.postId ? true : false;
+
+  //content, image file value
   const contentRef = useRef();
   const fileRef = useRef();
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isEdit) {
-      dispatch(setGrid(location.state.grid));
+      //dispatch(setGrid(location.state.grid));
       dispatch(setPreview(location.state.imageUrl));
       contentRef.current.value = location.state.content;
     }
@@ -45,21 +56,22 @@ const AddPost = () => {
   };
 
   const addNewPost = e => {
+    console.log("addNewPost 실행")
     e.preventDefault();
 
-    const content = contentRef.current.value;
-    if (content === '' || !preview) {
+    const contents = contentRef.current.value;
+    if (contents === '' || !preview) {
       alert('사진 첨부와 게시글을 작성해주세요');
       return;
     }
 
     const newPost = {
-      username: userInfo.username,
-      content: content,
-      imageUrl: null,
-      grid: gridStyle,
+      contents: contents,
+      img_url: null,
+      //grid: gridStyle,
     };
 
+    //is Edit인지에 따라 
     !isEdit
       ? dispatch(addPostAxios({ postData: newPost, navigate }))
       : dispatch(
@@ -67,16 +79,16 @@ const AddPost = () => {
             boardId: param.postId,
             postData: {
               // ...location.state, //
-              username: userInfo.username,
-              imageUrl: location.state.imageurl,
-              content: content,
-              grid: gridStyle,
+              contents: contents,
+              img_url: location.state.imageurl,
+              //grid: gridStyle,
             },
             navigate,
           })
         );
+
     dispatch(setPreview(null));
-    dispatch(resetGrid());
+    //dispatch(resetGrid());
   };
 
   return (

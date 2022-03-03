@@ -7,7 +7,7 @@ function TodoTemplate({ children }) {
 
 const TodoTemplateBlock = styled.div`
   width: 512px;
-  height: 93%;
+  height: 97%;
   padding: 30px;
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */

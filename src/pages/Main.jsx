@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { getPostAxios, getPostFB } from '../redux/modules/post';
 import InfinityScroll from '../components/InfinityScroll';
 
-const Main = ({ isLogin }) => {
+const Main = ({ isToken }) => {
+  console.log(isToken,"Main token")
   const { data, is_loading, paging } = useSelector(state => state.post);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,9 +21,10 @@ const Main = ({ isLogin }) => {
     dispatch(getPostAxios());
 }, []);
 
-  //isLogin에 따라서
+  //isToken 따라서
   const addPost = () => {
-    if (!isLogin) {
+    console.log(isToken,"addpostCheck token")
+    if (!isToken) {
       alert('로그인 후 작성해주세요');
       navigate('/login');
       return;
@@ -53,7 +55,6 @@ const Main = ({ isLogin }) => {
 const ListBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
 `;
 
 const AddButton = styled.button`

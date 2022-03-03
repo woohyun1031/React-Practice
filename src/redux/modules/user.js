@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import UserApi from "../../service/apis/userApi";
-import FirebaseAuth from "../../service/firebase/firebaseAuth";
 import { setCookie, deleteCookie } from "../../shared/Cookie";
 
-const FBapi = new FirebaseAuth();
 const Userapi = new UserApi();
 
 const initialState = {

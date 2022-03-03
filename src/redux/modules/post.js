@@ -44,12 +44,17 @@ export const getOnePostAxios = createAsyncThunk(
 export const addPostAxios = createAsyncThunk(
   "post/addPostAxios",
   async ({ postData, navigate }, { getState, dispatch }) => {
+    console.log(postData, "addpostaxios 실행");
     dispatch(setLoading(true));
+
     const _image = getState().image.preview;
-    const _userid = getState().user.user_info.userid;
-    const url = await Storage.uploadFile(_image, _userid);
+    console.log(_image, "_image preview");
+
+    const url = await Storage.uploadFile(_image);
+    console.log(url, "url");
+
     const res = await Postapi.addPost({
-      postData: { ...postData, imageUrl: url },
+      data: { ...postData, img_url: url },
       navigate,
     });
   }
@@ -62,11 +67,11 @@ export const updatePostAxios = createAsyncThunk(
     const _image = getState().image.preview;
     const _userid = getState().user.user_info.userid;
     let result;
-    if (_image !== postData.imageurl) {
+    if (_image !== postData.img_url) {
       const url = await Storage.uploadFile(_image, _userid);
       result = await Postapi.editPost({
         boardId,
-        postData: { ...postData, imageUrl: url },
+        postData: { ...postData, img_url: url },
         navigate,
       });
     } else {

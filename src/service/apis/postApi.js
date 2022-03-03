@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setOnePost } from "../../redux/modules/postdetail";
 import { logoutAxios } from "../../redux/modules/user";
+import { getCookie } from "../../shared/Cookie";
 
 //승훈님:13.124.233.197
 //광훈님:15.164.99.92
@@ -32,22 +33,25 @@ class PostApi {
       });
   }
 
-  async addPost({ postData, navigate }) {
+  async addPost({ data, navigate }) {
+    console.log(data, "addpost axios data");
+    const token = getCookie("token");
+    console.log(token);
     const addpostConfig = {
       method: "post",
-      url: `${this.base}/api/board`,
+      url: `${this.base}/api/posts`,
       headers: {
         "Content-Type": "application/json",
-        "X-AUTH-TOKEN": sessionStorage.getItem("token"),
+        "X-AUTH-TOKEN": token,
       },
-      data: JSON.stringify(postData),
+      data: JSON.stringify(data),
     };
 
     return axios(addpostConfig)
       .then((res) => {
-        console.log(res);
+        console.log(res, "addpost axios res");
         alert("게시글 등록이 완료되었습니다.");
-        navigate(`/post/${res.data.boardId}`, { replace: true });
+        navigate(`/post/${res.data.post_id}`, { replace: true });
         return res.data;
       })
       .catch((err) => {
