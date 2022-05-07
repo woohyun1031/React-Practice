@@ -1,15 +1,14 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD7ABVeUi8XOIg8gCQDJkY7_A39YzNG48k",
-  authDomain: "image-community-c8434.firebaseapp.com",
-  databaseURL:
-    "https://image-community-c8434-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "image-community-c8434",
-  storageBucket: "image-community-c8434.appspot.com",
-  messagingSenderId: "759981200841",
-  appId: "1:759981200841:web:6b73ed9b03ba7f12640418",
-  measurementId: "G-V69KVR1W3Q",
+  apiKey: process.env.React_App_API_KEY,
+  authDomain: process.env.React_App_AUTH_DOMAIN,
+  databaseURL: process.env.React_App_DATABASE_URL,
+  projectId: process.env.React_App_PROJECT_ID,
+  storageBucket: process.env.React_App_STORAGE_BUCKET,
+  messagingSenderId: process.env.React_App_MESSAGING_SENDER_ID,
+  appId: process.env.React_App_APP_ID,
+  measurementId: process.env.React_App_MEASURE_MENT_ID,
 };
 
 // Initialize Firebase
