@@ -1,0 +1,17 @@
+{
+  "name": "testing_practice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0"
+  }
+}
