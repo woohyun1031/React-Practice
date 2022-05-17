@@ -2,4 +2,13 @@ function sum(a, b) {
   return a + b;
 }
 
-module.exports = sum; // 내보내기
+function sumOf(numbers) {
+  let result = 0;
+  numbers.forEach((n) => {
+    result += n;
+  });
+  return result;
+}
+
+exports.sum = sum;
+exports.sumOf = sumOf;
