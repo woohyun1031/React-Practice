@@ -1,7 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+
+import { Route } from "react-router-dom";
+
 import Start from "./Start";
+import Quiz from "./Quiz";
+import Score from "./Score";
 
 function App() {
   const [name, setName] = React.useState("르탄이");
@@ -14,7 +17,17 @@ function App() {
         margin: "auto",
       }}
     >
-      <Start name={name} />
+      <Route path="/" exact>
+        <Start name={name} />
+      </Route>
+
+      <Route path="/quiz" exact>
+        <Quiz />
+      </Route>
+
+      <Route path="/score" exact>
+        <Score name={name} />
+      </Route>
     </div>
   );
 }

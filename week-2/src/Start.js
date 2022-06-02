@@ -1,29 +1,29 @@
 import React from "react";
 import img from "./scc_img01.png";
+import styled from "styled-components";
+
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setName } from "./redux/modules/user";
+import { Container, Button, Img, Highlight } from "./elements";
+
 const Start = (props) => {
-  console.log(props);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const name_ref = React.useRef(null);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "16px",
-        boxSizing: "border-box",
-      }}
-    >
-      <img
+    <Container is_main>
+      <Img
         src={img}
         style={{
-          width: "30vw",
+          width: "60vw",
           margin: "16px",
         }}
       />
-      <h1 style={{ fontSize: "1.5em", lineHeight: "1.5" }}>
+      <h1>
         나는{" "}
-        <span
+        <Highlight
           style={{
             backgroundColor: "#fef5d4",
             padding: "5px 10px",
@@ -31,10 +31,11 @@ const Start = (props) => {
           }}
         >
           {props.name}
-        </span>
+        </Highlight>
         에 대해 얼마나 알고 있을까?
       </h1>
       <input
+        ref={name_ref}
         style={{
           border: "1px solid #dadafc",
           borderRadius: "30px",
@@ -42,18 +43,15 @@ const Start = (props) => {
           width: "100%",
         }}
       />
-      <button
-        style={{
-          padding: "10px 36px",
-          backgroundColor: "#dadafc",
-          border: "#dadafc",
-          borderRadius: "30px",
-          margin: "36px 0px",
+      <Button
+        onClick={() => {
+          dispatch(setName(name_ref.current.value));
+          history.push("/quiz");
         }}
       >
         시작하기
-      </button>
-    </div>
+      </Button>
+    </Container>
   );
 };
 
