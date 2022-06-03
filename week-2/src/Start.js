@@ -14,6 +14,7 @@ const Start = (props) => {
 
   return (
     <Container is_main>
+      우리 재밌게 놀다가 오자tkfkd
       <Img
         src={img}
         style={{

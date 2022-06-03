@@ -1,7 +1,6 @@
-import logo from "./logo.svg";
-import "./App.css";
 import React from "react";
 import Text from "./Text";
+import styled, { keyframes } from "styled-components";
 
 class App extends React.Component {
   constructor(props) {
@@ -44,9 +43,36 @@ class App extends React.Component {
           }}
           ref={this.circle}
         ></div>
+        <Box></Box>
       </div>
     );
   }
 }
 
 export default App;
+
+const boxFade = keyframes`
+  0% {
+    opacity: 1;
+    top: 20px;
+
+  }
+  50% {
+    opacity: 0;
+    top: 400px;
+  }
+  100% {
+    opacity: 1;
+    top: 20px;
+  }
+`;
+const Box = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background: green;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  animation: ${boxFade} 2s 1s infinite linear alternate;
+`;
