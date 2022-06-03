@@ -12,6 +12,7 @@ const Detail = (props) => {
 
   return (
     <div>
+      {console.log("render")}
       <h1>{bucket_list[bucket_index].text}</h1>
       <button
         onClick={() => {
@@ -22,9 +23,14 @@ const Detail = (props) => {
       </button>
       <button
         onClick={() => {
+          history.replace("/");
+        }}
+      ></button>
+      <button
+        onClick={() => {
           console.log("삭제하기 버튼을 눌렀어!");
           dispatch(deleteBucket(bucket_index));
-          history.goBack();
+          history.replace("/");
         }}
       >
         삭제하기

@@ -35,7 +35,6 @@ export default function reducer(state = initialState, action = {}) {
     case "bucket/CREATE": {
       console.log("이제 값을 바꿀거야!");
       const new_bucket_list = [...state.list, action.bucket];
-      console.log(new_bucket_list);
       return { list: new_bucket_list };
     }
 

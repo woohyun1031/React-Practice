@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createBucket } from "./redux/modules/bucket";
+import { db } from "./firebase";
+import { collection, getDoc, getDocs } from "firebase/firestore";
 
 // BucketList 컴포넌트를 import 해옵니다.
 // import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
@@ -12,6 +14,7 @@ import NotFound from "./NotFound";
 import Progress from "./Progress";
 
 function App() {
+  console.log("app");
   const [list, setList] = React.useState([
     "영화관 가기",
     "매일 책읽기",
@@ -19,7 +22,6 @@ function App() {
   ]);
   const text = React.useRef(null);
   const dispatch = useDispatch();
-
   const addBucketList = () => {
     // 스프레드 문법! 기억하고 계신가요? :)
     // 원본 배열 list에 새로운 요소를 추가해주었습니다.
@@ -27,6 +29,16 @@ function App() {
 
     dispatch(createBucket({ text: text.current.value, completed: false }));
   };
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const query = await getDocs(collection(db, "bucket"));
+      console.log(query);
+      query.forEach((doc) => {
+        console.log(doc.id, doc.data());
+      });
+    };
+    fetchData();
+  }, []);
   return (
     <div className="App">
       <Container>
