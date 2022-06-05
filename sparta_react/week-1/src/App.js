@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createBucket } from "./redux/modules/bucket";
-import { db } from "./firebase";
-import { collection, getDoc, getDocs } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createBucket,
+  loadBucketFB,
+  addBucketFB,
+} from "./redux/modules/bucket";
 
 // BucketList 컴포넌트를 import 해옵니다.
 // import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
@@ -12,33 +14,31 @@ import BucketList from "./BucketList";
 import Detail from "./Detail";
 import NotFound from "./NotFound";
 import Progress from "./Progress";
+import Spinner from "./Spinner";
+
+import { db } from "./firebase";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 function App() {
-  console.log("app");
-  const [list, setList] = React.useState([
-    "영화관 가기",
-    "매일 책읽기",
-    "수영 배우기",
-  ]);
   const text = React.useRef(null);
   const dispatch = useDispatch();
-  const addBucketList = () => {
-    // 스프레드 문법! 기억하고 계신가요? :)
-    // 원본 배열 list에 새로운 요소를 추가해주었습니다.
-    // setList([...list, text.current.value]);
+  const is_loaded = useSelector((state) => state.bucket.is_loaded);
 
-    dispatch(createBucket({ text: text.current.value, completed: false }));
-  };
   React.useEffect(() => {
-    const fetchData = async () => {
-      const query = await getDocs(collection(db, "bucket"));
-      console.log(query);
-      query.forEach((doc) => {
-        console.log(doc.id, doc.data());
-      });
-    };
-    fetchData();
+    dispatch(loadBucketFB());
   }, []);
+
+  const addBucketList = () => {
+    dispatch(addBucketFB({ text: text.current.value, completed: false }));
+  };
   return (
     <div className="App">
       <Container>
@@ -49,7 +49,7 @@ function App() {
         {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
         <Switch>
           <Route path="/" exact>
-            <BucketList list={list} />
+            <BucketList />
           </Route>
           <Route path="/detail/:index">
             <Detail />
@@ -64,13 +64,7 @@ function App() {
         <input type="text" ref={text} />
         <button onClick={addBucketList}>추가하기</button>
       </Input>
-      <button
-        onClick={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }}
-      >
-        위로 가기
-      </button>
+      {!is_loaded && <Spinner />}
     </div>
   );
 }
