@@ -31,7 +31,10 @@ function Main() {
   };
 
   console.log(til_list);
-
+  // const istrue = true;
+  // if (istrue) {
+  //   throw new Error("펄이가 아니예요!");
+  // }
   return (
     <>
       <div

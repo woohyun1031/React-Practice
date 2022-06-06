@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Write from "./pages/Write";
+import { ErrorBoundary } from "react-error-boundary";
 
 import {
   createUserWithEmailAndPassword,
@@ -12,6 +13,7 @@ import { auth, db } from "./shared/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Signup from "./Signup";
 import Login from "./Login";
+import instance from "./shared/axios";
 
 /**
  *
@@ -52,20 +54,34 @@ function App() {
     }
   };
 
+  const ErrorFallback = (err) => {
+    console.log(err);
+    return <div>에러났어!</div>;
+  };
+
+  const isClick = () => {
+    const fetchData = () => {
+      instance.get("http://localhost:5001/geterror");
+    };
+    fetchData();
+  };
+
   React.useEffect(() => {
     onAuthStateChanged(auth, loginCheck);
   }, []);
 
   return (
-    <div className="App" style={{ display: "flex", gap: "1rem" }}>
-      <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/write" element={<Write />}></Route>
-      </Routes>
-      <button onClick={signup}>로그인</button>
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div className="App" style={{ display: "flex", gap: "1rem" }}>
+        <Routes>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/write" element={<Write />}></Route>
+        </Routes>
+        <button onClick={isClick}>interceptors</button>
+      </div>
+    </ErrorBoundary>
   );
 }
 
