@@ -27,8 +27,7 @@ function Main() {
       sleep_time: "10:00",
     };
 
-    let hi = axios.post("http://localhost:5001/sleep_times", data);
-    console.log(hi);
+    axios.get("http://localhost:5001/sleep_times");
   };
 
   console.log(til_list);
