@@ -5,11 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { analytics } from "./firebase";
 import { logEvent } from "firebase/analytics";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </QueryClientProvider>,
   document.getElementById("root")
 );
 function sendToAnalytics(metric) {
