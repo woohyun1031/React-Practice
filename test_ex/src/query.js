@@ -1,37 +1,31 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import "./App.css";
 import { useQuery } from "react-query";
 import axios from "axios";
-
-import { Cat } from "./Cat";
-import { Dog } from "./Dog";
-
+// promise를 반환합니다!
+// mock api에서 sleepList를 가져와요
 const getSleepList = () => {
   return axios.get("http://localhost:5001/sleep_times");
 };
-
 function App() {
   const sleep_query = useQuery("sleep_list", getSleepList, {
     onSuccess: (data) => {
       console.log("성공했어!", data);
     },
   });
+
   return (
     <div className="App">
-      {sleep_query.data.data.map((d) => {
-        return (
-          <div>
-            <p>{d.day}</p>
-            <p>{d.sleep_time}</p>
-          </div>
-        );
-      })}
-      <Routes>
-        <Route path="/cat" element={<Cat />} />
-        <Route path="/" element={<Dog />} />
-      </Routes>
+      <div>
+        {sleep_query?.data?.data?.map((d) => {
+          return (
+            <div>
+              <p>{d.day}</p> <p>{d.sleep_time}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
-
 export default App;
