@@ -26,6 +26,23 @@ module.exports = (env, argv) => {
           test: /\.tsx?$/,
           use: ["babel-loader", "ts-loader"],
         },
+        {
+          test: /\.scss?$/,
+          exclude: /node_module/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            {
+              loader: "sass-loader",
+              options: {
+                implementation: sass, //dart-sass 적용
+                sassOptions: {
+                  fiber: fibers, // fibers 적용, sass 컴파일 속도 향상
+                },
+              },
+            },
+          ],
+        },
       ],
     },
 
