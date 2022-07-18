@@ -16,7 +16,7 @@
   \*********************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"./node_modules/react/index.js\"));\n\nvar App = function App() {\n  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\"h1\", null, \"React without CRA...\"));\n};\n\nexports[\"default\"] = App;\n\n//# sourceURL=webpack://nocra/./src/App.tsx?");
+eval("\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"./node_modules/react/index.js\"));\n\nvar App = function App() {\n  return react_1[\"default\"].createElement(react_1[\"default\"].Fragment, null, react_1[\"default\"].createElement(\"h1\", null, \"React without CRA...\"));\n};\n\nexports[\"default\"] = App;\n\n//# sourceURL=webpack://nocra/./src/App.tsx?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("/* provided dependency */ var React = __webpack_require__(/*! react */ \".
   \***********************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"./node_modules/react/index.js\"));\n\nvar react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\"));\n\nvar App_1 = __importDefault(__webpack_require__(/*! ./App */ \"./src/App.tsx\"));\n\nvar rootElement = document.getElementById(\"root\");\nreact_dom_1[\"default\"].render( /*#__PURE__*/React.createElement(App_1[\"default\"], null), rootElement);\n\n//# sourceURL=webpack://nocra/./src/index.tsx?");
+eval("\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"./node_modules/react/index.js\"));\n\nvar react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\"));\n\nvar App_1 = __importDefault(__webpack_require__(/*! ./App */ \"./src/App.tsx\"));\n\nvar rootElement = document.getElementById(\"root\");\nreact_dom_1[\"default\"].render(react_1[\"default\"].createElement(App_1[\"default\"], null), rootElement);\n\n//# sourceURL=webpack://nocra/./src/index.tsx?");
 
 /***/ }),
 
@@ -154,7 +154,7 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ./cjs
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("72079d2a1f6f62feb3ce")
+/******/ 		__webpack_require__.h = () => ("ffafb192a510f6841036")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
