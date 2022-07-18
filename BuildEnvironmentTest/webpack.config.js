@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 module.exports = {
   mode: process.env.MODE, // 만약 환경변수를 사용하지 않는다면 직접 'development' 입력
