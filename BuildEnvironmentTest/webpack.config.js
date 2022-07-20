@@ -1,13 +1,10 @@
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const dotenv = require("dotenv");
-dotenv.config();
-const isMode = process.env.MODE;
-const isPort = process.env.PORT;
-console.log(isMode, isPort);
+const webpack = require("webpack")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const dotenv = require("dotenv").config()
+
 module.exports = {
-  mode: isMode, // 만약 환경변수를 사용하지 않는다면 직접 'development' 입력
+  mode: process.env.MODE, // 만약 환경변수를 사용하지 않는다면 직접 'development' 입력
   entry: "./src/index.js",
   output: {
     // 번들링 결과 : /dist폴더
@@ -51,16 +48,16 @@ module.exports = {
     }),
     // 환경 정보를 제공
     new webpack.DefinePlugin({
-      mode: isMode,
-      port: isPort,
+      mode: process.env.MODE,
+      port: process.env.PORT,
     }),
   ],
   devServer: {
     host: "localhost",
-    port: isPort,
+    port: process.env.PORT,
     open: true,
     historyApiFallback: true,
     // hot : 모듈의 변화된 부분만 서버에 자동으로 반영
     hot: true,
   },
-};
+}
